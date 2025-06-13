@@ -1,0 +1,2 @@
+(Node.js ve python yüklü olmalıdır çalışması için projenin)Ilk önce proje dosyasını açın. Sonra proje dosyasının içinde terminali açın. Ardından npm install komutunu terminale girin. Ardından front-end için npm run start komutunu giren. Sonrasında cd backend komutunu girin. 
+Ardından ise python -m venv venv bu komutu ardındansa pip install Pillow djangorestframework djangorestframework-simplejwt django-cors-headers bu komutu yazın ardından bunu python manage.py makemigrations ardındansa bunu python manage.py migrate. Son olarak ise bu komutu yazın python manage.py runserver.
