@@ -1,137 +1,48 @@
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Homepage from "./Homepage";
+import "./styles/Navbar.css";
+
+function Navbar() {
+  return (
+    <nav className="navbar-root">
+      <div className="navbar-inner">
+        {/* Left: Logo */}
+        <div className="navbar-logo">
+          <img src="https://img.icons8.com/color/96/brain.png" alt="Dersify Logo" className="navbar-logo-img" />
+          <span className="navbar-logo-text">DERSIFY</span>
+        </div>
+        {/* Center: Navigation Links */}
+        <div className="navbar-links">
+          <Link to="/" className="navbar-link">Dersler</Link>
+          <Link to="/konu-anlatimlari" className="navbar-link">Konu Anlatımları</Link>
+          <Link to="/testler" className="navbar-link">Testler</Link>
+        </div>
+        {/* Right: Buttons */}
+        <div className="navbar-buttons">
+          <button className="navbar-btn">
+            <img src="https://img.icons8.com/ios-filled/24/4a555c/conference-call.png" alt="Topluluk" className="navbar-btn-icon" />
+            TOPLULUK
+          </button>
+          <button className="navbar-btn">
+            <img src="https://img.icons8.com/ios-filled/24/4a555c/user-male-circle.png" alt="Giriş Yap" className="navbar-btn-icon" />
+            GİRİŞ YAP
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}
 
 function App() {
-  function handleLogin() {
-    axios
-      .post("http://127.0.0.1:8000/api/login", {
-        username: "Arda123456",
-        password: "benimadimarda",
-      })
-      .then((res) => {
-        console.log("Logged in:", res.data);
-        localStorage.setItem("accessToken", res.data.access);
-        localStorage.setItem("refreshToken", res.data.refresh);
-      })
-      .catch((err) => {
-        console.error("Login failed:", err.response?.data || err.message);
-      });
-  }
-  function handleCreatePost() {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      console.error("No access token—user is not logged in");
-      return;
-    }
-
-    axios
-      .get("http://127.0.0.1:8000/api/comments", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        params: {
-          post_name: "My first post",
-          tag: "All",
-        },
-      })
-      .then((response) => {
-        console.log("Comments:", response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-  async function createComment(commentText, postId) {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      console.error("No access token—user not logged in");
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/create-comment",
-        {
-          comment: commentText,
-          post: postId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log("Comment created:", response.data);
-    } catch (err) {
-      if (err.response) {
-        console.error(
-          `Failed (HTTP ${err.response.status}):`,
-          err.response.data
-        );
-      } else {
-        console.error("Network or other error:", err.message);
-      }
-    }
-  }
-  function viewMyPost() {
-    const accessToken = localStorage.getItem("accessToken");
-
-    axios
-      .get("http://127.0.0.1:8000/api/my-posts", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log("My posts:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  }
-  async function logout() {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-
-    console.log("Logging out with refresh token:", refreshToken);
-    if (!refreshToken) {
-      console.warn("No refresh token; skipping server call.");
-      localStorage.removeItem("accessToken");
-      return;
-    }
-
-    try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/logout/",
-        { refresh: refreshToken, access: accessToken   },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-    } catch (err) {
-      console.error("Logout failed:", err.response?.data || err.message);
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-    }
-  }
-
   return (
-    <div>
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleCreatePost}>Post</button>
-      <button onClick={() => createComment("Nice post!", 1)}>
-        Leave Comment
-      </button>
-      <button onClick={viewMyPost}>My Posts</button>
-      <button onClick={logout}>Log Out</button>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        {/* Add more routes here for other pages */}
+      </Routes>
+    </Router>
   );
 }
 
