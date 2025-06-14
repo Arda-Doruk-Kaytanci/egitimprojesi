@@ -1,0 +1,25 @@
+.subject-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.subject-icon {
+    width: 15vw;
+    margin-right: 0;
+    height: 20vh;
+}
+
+.subject-text {
+    margin-left: 0;
+    text-align: center;
+    color: white;
+    font-family: serif;
+    font-size: 3rem;
+    margin-left: 2vw;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 10px;
+    white-space: nowrap;
+    width: 15vw;
+}

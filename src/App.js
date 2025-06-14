@@ -2,32 +2,43 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Homepage from "./Homepage";
 import "./styles/Navbar.css";
-
+import logoImg from "./assets/transparent-white-font-logo.png";
+import profileImg from "./assets/login.png";
+import communityImg from "./assets/community.png";
 function Navbar() {
   return (
     <nav className="navbar-root">
       <div className="navbar-inner">
         {/* Left: Logo */}
         <div className="navbar-logo">
-          <img src="https://img.icons8.com/color/96/brain.png" alt="Dersify Logo" className="navbar-logo-img" />
-          <span className="navbar-logo-text">DERSIFY</span>
+          <img src={logoImg} alt="Dersify Logo" className="navbar-logo-img" />
         </div>
         {/* Center: Navigation Links */}
         <div className="navbar-links">
-          <Link to="/" className="navbar-link">Dersler</Link>
-          <Link to="/konu-anlatimlari" className="navbar-link">Konu Anlatımları</Link>
-          <Link to="/testler" className="navbar-link">Testler</Link>
+          <Link to="/lessons" className="navbar-link">
+            Dersler
+          </Link>
+          <Link to="/subject-explanations" className="navbar-link">
+            Konu Anlatımları
+          </Link>
+          <Link to="/tests" className="navbar-link">
+            Testler
+          </Link>
         </div>
         {/* Right: Buttons */}
         <div className="navbar-buttons">
-          <button className="navbar-btn">
-            <img src="https://img.icons8.com/ios-filled/24/4a555c/conference-call.png" alt="Topluluk" className="navbar-btn-icon" />
-            TOPLULUK
-          </button>
-          <button className="navbar-btn">
-            <img src="https://img.icons8.com/ios-filled/24/4a555c/user-male-circle.png" alt="Giriş Yap" className="navbar-btn-icon" />
-            GİRİŞ YAP
-          </button>
+          <Link className="navbar-link-link">
+            <img
+              src={communityImg}
+              alt="Topluluk"
+              className="navbar-btn-icon"
+            />
+            <p className="navbar-btn-p">TOPLULUK</p>
+          </Link>
+          <Link className="navbar-link-link">
+            <img src={profileImg} alt="Giriş Yap" className="navbar-btn-icon" />
+            <p className="navbar-btn-p">GİRİŞ YAP</p>
+          </Link>
         </div>
       </div>
     </nav>

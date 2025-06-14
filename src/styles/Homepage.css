@@ -1,204 +1,104 @@
-/* Homepage.css */
-
-.homepage-root {
-  min-height: 100vh;
+.homepage-main-section {
+  display: flex;
+  flex-direction: row;
   font-family: serif;
-  background: #f3f4f6;
-  position: relative;
-  overflow-x: hidden;
+  background: #9ABBB7;
+  height: 90vh;
+  border-top: 4px black dotted;
+  overflow: hidden;
 }
 
-.homepage-welcome {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 56px 16px;
-  background: repeating-linear-gradient(135deg, #b2d3d2 0px, #b2d3d2 8px, #a3c9c8 8px, #a3c9c8 16px);
-  border-bottom: 4px dashed #4a555c;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
-}
-@media (min-width: 768px) {
-  .homepage-welcome {
-    flex-direction: row;
-  }
-}
-
-.homepage-illustration {
-  width: 16rem;
-  height: 16rem;
-  object-fit: contain;
-}
-
-.homepage-heading {
-  color: #fff;
-  font-size: 2.5rem;
-  font-weight: 800;
+.homepage-main-1 {
   text-align: center;
-  margin-bottom: 2rem;
-  -webkit-text-stroke: 3px #888;
-  text-shadow: 0 2px 0 #888, 0 4px 0 #fff;
-  letter-spacing: -1px;
-  line-height: 1.1;
-}
-@media (min-width: 768px) {
-  .homepage-heading {
-    font-size: 3rem;
-  }
-}
-
-.homepage-btn {
-  margin-top: 0.5rem;
-  padding: 0.75rem 2rem;
-  border: 4px solid #000;
-  border-radius: 0.5rem;
-  background: #fff;
-  font-size: 1.25rem;
-  font-weight: 800;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  color: #000;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.homepage-btn:hover {
-  background: #f3f3f3;
-}
-
-.homepage-main {
-  width: 100%;
-  background: #f6f8f7;
-  padding: 2rem 0 5rem 0;
-}
-
-.homepage-searchbar {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-  max-width: 32rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.homepage-searchbar input {
-  width: 100%;
-  border: 1px solid #bbb;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.1rem;
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-}
-
-.homepage-courses-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-.homepage-courses-title {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #111;
-}
-.homepage-courses-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.homepage-courses-logo img {
-  width: 4rem;
-  height: 4rem;
-}
-.homepage-courses-logo span {
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: #111;
-  margin-top: 0.25rem;
-}
-
-.homepage-courses-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-@media (min-width: 640px) {
-  .homepage-courses-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (min-width: 1024px) {
-  .homepage-courses-grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-}
-
-.homepage-course-btn {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-height: 110px;
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  font-size: 1.5rem;
-  font-weight: 700;
+  width: 50vw;
   color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: none;
+
+  height: 90vh;
+
+  margin-bottom: 2rem;
+}
+
+.start-button {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 16px 32px;
+  border: 4px solid black;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(153, 149, 149, 0.1);
   cursor: pointer;
-  transition: transform 0.15s;
-}
-.homepage-course-btn:hover {
-  transform: scale(1.05);
-}
-.homepage-course-math { background: #7d6fd2; }
-.homepage-course-bio { background: #f26a4b; }
-.homepage-course-physics { background: #3bb18b; }
-.homepage-course-history { background: #f7b32b; }
-.homepage-course-btn img {
-  width: 5rem;
-  height: 5rem;
-  margin-right: 0.5rem;
+  transition: transform 0.1s ease-in-out;
 }
 
-.homepage-corner-logo {
-  position: fixed;
-  bottom: 8rem;
-  right: 2rem;
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.start-button:hover {
+  transform: scale(1.03);
 }
-.homepage-corner-logo img {
-  width: 4rem;
-  height: 4rem;
+
+.homepage-main-2 {
+  width: 25vw;
 }
-.homepage-corner-logo span {
+
+.homepage-main-1 p {
+  line-height: 1.1;
+  font-size: 5.5rem;
+  margin-top: 10vh;
+  -webkit-text-stroke: 3px #888;
+  text-shadow: 0 3.8px 0 #888, 0 4px 0 #fff;
+  letter-spacing: -1px;
   font-weight: 800;
-  font-size: 1.1rem;
-  color: #111;
-  margin-top: 0.25rem;
+  padding: 0;
 }
 
-.homepage-help-btn {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 50;
-  background: #ffd600;
-  border-radius: 9999px;
-  padding: 1rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+.homepage-bottom-container {
+  background-color: #d1d3d4;
+  border-bottom: #888 8px solid;
+}
+.homepage-bottom-container > .header-div p{
+  height: fit-content;
+  margin-left: 5vw;
+  margin-top: 20vh;
+  font-family: 'Georgia', serif;
+  font-size: 36px;
+  font-weight: 900; 
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+#studentImg {
+  position: relative;
+  top: 52.5vh;
+  width: 20vw;
+  left: 2vw;
+}
+
+#teacherImg {
+  position: relative;
+  top: 25vh;
+  right: 4vw;
+  width: 20vw;
+}
+.empty-space{
+  height: 5vh;
+  border-bottom: black dotted 3px;
+}
+
+#bottom-logo{
+  width: 15vw;
+  height: 22vh;
+  margin-top: 3vh;
+  margin-left: 57.5vw;
+}
+.header-div{
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 2rem;
-  transition: background 0.2s;
 }
-.homepage-help-btn:hover {
-  background: #ffe066;
+
+.lessons-container{
+  margin-top: 7vh;
+  margin-left: 17vw;
+  display: grid;
+  grid-template-columns: 30vw 30vw;
+  row-gap: 3vh;
+  column-gap: 8vw;
+  margin-bottom: 10vh;
 }
-.homepage-help-btn img {
-  width: 2rem;
-  height: 2rem;
-} 
