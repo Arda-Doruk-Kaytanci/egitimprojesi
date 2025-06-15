@@ -1,27 +1,65 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+subjects = [
+    ("turkce", "Türkçe"),
+    ("temel_matematik", "Temel Matematik"),
+    ("fizik", "Fizik"),
+    ("kimya", "Kimya"),
+    ("biyoloji", "Biyoloji"),
+    ("tarih", "Tarih"),
+    ("cografya", "Coğrafya"),
+    ("felsefe", "Felsefe"),
+    ("din", "Din Kültürü ve Ahlak Bilgisi"),
+    ("matematik", "Matematik"),
+    ("edebiyat", "Türk Dili ve Edebiyatı"),
+    ("tarih1", "Tarih-1"),
+    ("tarih2", "Tarih-2"),
+    ("cografya1", "Coğrafya-1"),
+    ("cografya2", "Coğrafya-2"),
+    ("psikoloji", "Psikoloji"),
+    ("sosyoloji", "Sosyoloji"),
+    ("mantik", "Mantık"),
+    ("ingilizce", "İngilizce"),
+    ("almanca", "Almanca"),
+    ("fransizca", "Fransızca"),
+]
+
 
 class PostModel(models.Model):
     posted_by = models.ForeignKey(
-        User, blank=False, null=True, on_delete=models.PROTECT
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
     )
-    categories = {"EDU": "educational", "HELP": "help", "GENERAL": "general"}
+    CATEGORIES = [
+        ("EDU", "educational"),
+        ("HELP", "help"),
+        ("GENERAL", "general"),
+    ]
     post_name = models.CharField(max_length=100)
-    tag = models.CharField(max_length=30, null=True, blank=False)
+    tag = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+    )
     category = models.CharField(
-        choices=categories, max_length=50, null=True, blank=False
+        choices=CATEGORIES,
+        max_length=50,
+        null=True,
+        blank=True,
     )
     attachments = models.FileField(
         upload_to="attachments/",
-        blank=True,
         null=True,
+        blank=True,
         max_length=255,
     )
     image = models.ImageField(
         upload_to="posts/images/",
-        blank=True,
         null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -30,11 +68,16 @@ class PostModel(models.Model):
 
 class CommentModel(models.Model):
     posted_by = models.ForeignKey(
-        User, on_delete=models.PROTECT, blank=False, null=True
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
     )
     comment = models.CharField(max_length=1000)
     post = models.ForeignKey(
-        PostModel, related_name="comments", on_delete=models.PROTECT
+        PostModel,
+        related_name="comments",
+        on_delete=models.PROTECT,
     )
 
     def __str__(self):
@@ -42,49 +85,125 @@ class CommentModel(models.Model):
 
 
 class QuestionsModel(models.Model):
-    subjects = {"MATH": "math", "GEOGRAPHY": "geography", "LITERATURE": "literature"}
-    name = models.CharField(max_length=100, null=True, blank=False)
-    question = models.CharField(max_length=1000, null=True, blank=False)
-    subject = models.CharField(choices=subjects, blank=False, null=True)
-    tag = models.CharField(max_length=100, blank=False, null=True)
+    name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    question = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+    )
+    subject = models.CharField(
+        choices=subjects,
+        null=True,
+        blank=True,
+        max_length=100,
+    )
+    tag = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
     image = models.ImageField(
         upload_to="posts/images/",
-        blank=True,
         null=True,
+        blank=True,
     )
-    option_a = models.CharField(max_length=100, null=True, blank=False)
-    option_b = models.CharField(max_length=100, null=True, blank=False)
-    option_c = models.CharField(max_length=100, null=True, blank=False)
-    option_d = models.CharField(max_length=100, null=True, blank=False)
-    option_e = models.CharField(max_length=100, null=True, blank=False)
-    answers = {"A": "A", "B": "B", "C": "C", "D": "D", "E": "E"}
-    correct_answer = models.CharField(choices=answers, null=True, blank=False)
+    option_a = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    option_b = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    option_c = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    option_d = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    option_e = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    ANSWER_CHOICES = [
+        ("A", "A"),
+        ("B", "B"),
+        ("C", "C"),
+        ("D", "D"),
+        ("E", "E"),
+    ]
+    correct_answer = models.CharField(
+        choices=ANSWER_CHOICES,
+        max_length=2,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
-        return self.name
+        return self.name or ""
 
 
 class NotesModel(models.Model):
-    subjects = {"MATH": "math", "GEOGRAPHY": "geography", "LITERATURE": "literature"}
-    name = models.CharField(max_length=100, null=True, blank=False)
-    subject = models.CharField(choices=subjects, blank=False, null=True)
-    content = models.CharField(max_length=1000, blank=False, null=True)
-    tag = models.CharField(max_length=100, blank=False, null=True)
+    name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    brief_exp = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    subject = models.CharField(
+        choices=subjects,
+        null=True,
+        blank=True,
+        max_length=100,
+    )
+    content = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+    )
+    tag = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
     image = models.ImageField(
         upload_to="posts/images/",
-        blank=True,
         null=True,
+        blank=True,
     )
 
     def __str__(self):
-        return self.name
+        return self.name or ""
 
 
 class TestModel(models.Model):
     name = models.CharField(max_length=100)
-    questions = models.ManyToManyField("QuestionsModel", related_name="tests")
-    subjects = {"MATH": "math", "GEOGRAPHY": "geography", "LITERATURE": "literature"}
-    subject = models.CharField(choices=subjects, blank=False, null=True)
+    questions = models.ManyToManyField(
+        "QuestionsModel",
+        related_name="tests",
+    )
+    subject = models.CharField(
+        choices=subjects,
+        null=True,
+        blank=True,
+        max_length=100,
+    )
 
     def __str__(self):
         return self.name

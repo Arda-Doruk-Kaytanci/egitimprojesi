@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PostModel, CommentModel, QuestionsModel, TestModel
+from .models import PostModel, CommentModel, QuestionsModel, TestModel, NotesModel
 from django.contrib.auth.models import User
 
 
@@ -39,3 +39,9 @@ class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestModel
         fields = ["id", "name", "questions"]
+
+class NoteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = NotesModel
+        fields = "__all__"

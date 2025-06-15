@@ -2,62 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const TestLink = (props) => {
-  const name = props.data.name.replace(/\s+/g, "-").toLowerCase();
-  return <Link to={`tests/${name}`}>{name}</Link>;
-};
-const styles = {
-  card: {
-    border: "2px solid #9ABBB7",
-    borderRadius: "12px",
-    padding: "20px",
-    marginBottom: "24px",
-    backgroundColor: "#eef5f3", 
-    maxWidth: "500px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.08)",
-  },
-  title: {
-    fontSize: "22px",
-    fontWeight: "600",
-    marginBottom: "10px",
-    color: "#365853",
-  },
-  link: {
-    display: "inline-block",
-    marginTop: "12px",
-    padding: "10px 16px",
-    backgroundColor: "#9ABBB7",
-    color: "white",
-    textDecoration: "none",
-    borderRadius: "8px",
-    fontWeight: "bold",
-    transition: "background-color 0.3s ease",
-    ":hover": {
-      backgroundColor: "#88a7a2",
-    },
-  },
-};
-
-function TestsCatalogue() {
+function NoteCatalogue() {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  function fetchData() {
+
+  useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/tests/get")
+      .get("http://127.0.0.1:8000/api/notes/get")
       .then((res) => {
         setData(res.data);
         console.log(res.data);
       })
-      .catch((err) => {
-        console.error("Error fetching tests:", err);
+      .catch((err) => { 
+        console.error("Error fetching notes:", err);
       });
-  }
-
-  useEffect(() => {
-    fetchData();
   }, []);
-  const filteredTests = data.filter((test) =>
-    test.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+  const filteredNotes = data.filter((note) =>
+    note.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -98,10 +60,9 @@ function TestsCatalogue() {
               d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
             />
           </svg>
-
           <input
             type="text"
-            placeholder="Aradığınız testin adını girin"
+            placeholder="Aradığınız notun adını girin"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
@@ -125,9 +86,9 @@ function TestsCatalogue() {
           justifyItems: "center",
         }}
       >
-        {filteredTests.map((test) => (
+        {filteredNotes.map((note) => (
           <div
-            key={test.id}
+            key={note.id}
             style={{
               backgroundColor: "#eef5f3",
               border: "2px solid #7da89e",
@@ -153,16 +114,16 @@ function TestsCatalogue() {
                 marginBottom: "12px",
               }}
             >
-              {test.name}
+              {note.name}
             </h3>
             <p>
-              <strong>Ders:</strong> {test.questions[0].subject}
+              <strong>Ders:</strong> {note.subject}
             </p>
             <p>
-              <strong>Soru Sayısı:</strong> {test.questions.length}
+              <strong>Açıklama:</strong> {note.description || "Yok"}
             </p>
             <Link
-              to={`/tests/${test.name.replace(/\s+/g, "-").toLowerCase()}`}
+              to={`/notes/${note.name.replace(/\s+/g, "-").toLowerCase()}`}
               style={{
                 display: "inline-block",
                 marginTop: "12px",
@@ -181,7 +142,7 @@ function TestsCatalogue() {
                 (e.currentTarget.style.backgroundColor = "#4f716d")
               }
             >
-              Teste Git →
+              Notu Gör →
             </Link>
           </div>
         ))}
@@ -190,4 +151,4 @@ function TestsCatalogue() {
   );
 }
 
-export default TestsCatalogue;
+export default NoteCatalogue;

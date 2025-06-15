@@ -8,7 +8,7 @@ import communityImg from "./assets/community.png";
 import LoginPage from "./LoginPage";
 import TestCatalogue from "./TestsCatalogue";
 import ProfilePage from "./ProfilePage";
-import { AuthProvider } from "./AuthContext";
+import NoteCatalogue from "./NoteCatalogue";
 function Navbar() {
   return (
     <nav className="navbar-root">
@@ -60,6 +60,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/tests" element={<TestCatalogue />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/notes" element={<NoteCatalogue />} />
         </Routes>
       </Router>
   );

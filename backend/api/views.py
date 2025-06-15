@@ -7,12 +7,13 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import random
-from .models import PostModel, CommentModel, QuestionsModel, TestModel
+from .models import PostModel, CommentModel, QuestionsModel, TestModel, NotesModel
 from .serializers import (
     PostSerializer,
     CommentSerializer,
     QuestionSerializer,
     TestSerializer,
+    NoteSerializer
 )
 
 
@@ -204,6 +205,18 @@ class TestListView(generics.ListAPIView):
         if subject:
             return TestModel.objects.filter(subject=subject)
         return TestModel.objects.all()
+
+
+class NoteListView(generics.ListAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [AllowAny]
+    queryset = NotesModel.objects.all()
+
+    def get_queryset(self):
+        subject = self.request.query_params.get("subject")
+        if subject:
+            return NotesModel.objects.filter(subject=subject)
+        return NotesModel.objects.all()
 
 
 class ProfileView(APIView):

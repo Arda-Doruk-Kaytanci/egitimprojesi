@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html, format_html_join, mark_safe
 from django.urls import reverse
-from .models import PostModel, CommentModel, QuestionsModel, TestModel
+from .models import PostModel, CommentModel, QuestionsModel, TestModel, NotesModel
 
 
 @admin.register(PostModel)
@@ -96,3 +96,9 @@ class TestModelAdmin(admin.ModelAdmin):
     list_display = ["name"]
     search_fields = ["name"]
     filter_horizontal = ["questions"]
+
+
+@admin.register(NotesModel)
+class NoteModelAdmin(admin.ModelAdmin):
+    list_display = ["name"]
+    search_fields = ["name"]
