@@ -7,8 +7,13 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import random
-from .models import PostModel, CommentModel, QuestionsModel
-from .serializers import PostSerializer, CommentSerializer, QuestionSerializer
+from .models import PostModel, CommentModel, QuestionsModel, TestModel
+from .serializers import (
+    PostSerializer,
+    CommentSerializer,
+    QuestionSerializer,
+    TestSerializer,
+)
 
 
 class LogInView(APIView):
@@ -162,13 +167,54 @@ class GenerateTestView(generics.ListAPIView):
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
-        how_many = self.request.query_params.get("how_many")
-        subject = self.request.query_params.get("subject")
-        quiz = []
-        count = QuestionsModel.objects.count()
-        if count > how_many:
-            for i in range(how_many):
-                randNumber = random.randint(0, count - 1)
-                quiz.append(QuestionsModel.objects.filter(subject=subject))
-        else:
+        try:
+            how_many = int(self.request.query_params.get("how_many", 0))
+        except ValueError:
             return QuestionsModel.objects.none()
+
+        subject = self.request.query_params.get("subject")
+        questions = QuestionsModel.objects.filter(subject=subject)
+        count = questions.count()
+
+        if how_many > count:
+            return QuestionsModel.objects.none()
+
+        random_ids = random.sample(
+            list(questions.values_list("id", flat=True)), how_many
+        )
+        return QuestionsModel.objects.filter(id__in=random_ids)
+
+
+class CreateTestView(generics.CreateAPIView):
+    queryset = TestModel.objects.all()
+    serializer_class = TestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+
+class TestListView(generics.ListAPIView):
+    serializer_class = TestSerializer
+    permission_classes = [AllowAny]
+    queryset = TestModel.objects.all()
+
+    def get_queryset(self):
+        subject = self.request.query_params.get("subject")
+        if subject:
+            return TestModel.objects.filter(subject=subject)
+        return TestModel.objects.all()
+
+
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response(
+            {
+                "username": user.username,
+                "email": user.email,
+                "date_joined": user.date_joined,
+            }
+        )

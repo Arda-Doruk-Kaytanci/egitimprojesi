@@ -57,6 +57,8 @@ class QuestionsModel(models.Model):
     option_c = models.CharField(max_length=100, null=True, blank=False)
     option_d = models.CharField(max_length=100, null=True, blank=False)
     option_e = models.CharField(max_length=100, null=True, blank=False)
+    answers = {"A": "A", "B": "B", "C": "C", "D": "D", "E": "E"}
+    correct_answer = models.CharField(choices=answers, null=True, blank=False)
 
     def __str__(self):
         return self.name
@@ -73,6 +75,16 @@ class NotesModel(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self):
+        return self.name
+
+
+class TestModel(models.Model):
+    name = models.CharField(max_length=100)
+    questions = models.ManyToManyField("QuestionsModel", related_name="tests")
+    subjects = {"MATH": "math", "GEOGRAPHY": "geography", "LITERATURE": "literature"}
+    subject = models.CharField(choices=subjects, blank=False, null=True)
 
     def __str__(self):
         return self.name

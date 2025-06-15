@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html, format_html_join, mark_safe
 from django.urls import reverse
-from .models import PostModel, CommentModel, QuestionsModel
+from .models import PostModel, CommentModel, QuestionsModel, TestModel
 
 
 @admin.register(PostModel)
@@ -83,9 +83,16 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(QuestionsModel)
-class QuestionsAdmin(admin.ModelAdmin): 
+class QuestionsAdmin(admin.ModelAdmin):
     list_display = [
         field.name
         for field in QuestionsModel._meta.get_fields()
         if getattr(field, "concrete", False) and not field.many_to_many
     ]
+
+
+@admin.register(TestModel)
+class TestModelAdmin(admin.ModelAdmin):
+    list_display = ["name"]
+    search_fields = ["name"]
+    filter_horizontal = ["questions"]

@@ -5,29 +5,30 @@ import "./styles/Navbar.css";
 import logoImg from "./assets/transparent-white-font-logo.png";
 import profileImg from "./assets/login.png";
 import communityImg from "./assets/community.png";
+import LoginPage from "./LoginPage";
+import TestCatalogue from "./TestsCatalogue";
+import ProfilePage from "./ProfilePage";
+import { AuthProvider } from "./AuthContext";
 function Navbar() {
   return (
     <nav className="navbar-root">
       <div className="navbar-inner">
-        {/* Left: Logo */}
         <div className="navbar-logo">
           <img src={logoImg} alt="Dersify Logo" className="navbar-logo-img" />
         </div>
-        {/* Center: Navigation Links */}
         <div className="navbar-links">
-          <Link to="/lessons" className="navbar-link">
-            Dersler
+          <Link to="/" className="navbar-link">
+            Ana Sayfa
           </Link>
-          <Link to="/subject-explanations" className="navbar-link">
-            Konu Anlatımları
+          <Link to="/notes" className="navbar-link">
+            Notlar
           </Link>
           <Link to="/tests" className="navbar-link">
             Testler
           </Link>
         </div>
-        {/* Right: Buttons */}
         <div className="navbar-buttons">
-          <Link className="navbar-link-link">
+          <Link to="/community" className="navbar-link-link">
             <img
               src={communityImg}
               alt="Topluluk"
@@ -35,9 +36,14 @@ function Navbar() {
             />
             <p className="navbar-btn-p">TOPLULUK</p>
           </Link>
-          <Link className="navbar-link-link">
+          <Link
+            to={localStorage.getItem("accessToken") ? "/profile" : "/login"}
+            className="navbar-link-link"
+          >
             <img src={profileImg} alt="Giriş Yap" className="navbar-btn-icon" />
-            <p className="navbar-btn-p">GİRİŞ YAP</p>
+            <p className="navbar-btn-p">
+              {localStorage.getItem("accessToken") ? "PROFİL" : "GİRİŞ YAP"}
+            </p>
           </Link>
         </div>
       </div>
@@ -47,13 +53,15 @@ function Navbar() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        {/* Add more routes here for other pages */}
-      </Routes>
-    </Router>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/tests" element={<TestCatalogue />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </Router>
   );
 }
 
